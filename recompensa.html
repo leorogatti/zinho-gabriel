@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Recompensa</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="howler.min.js"></script>
+  <script src="js/howler.min.js"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
 <style>
@@ -73,7 +73,7 @@
   <div id="game">
     <div id="center">
       <h2 id="title" class="animated">Gabriel Zinho</h2>
-      <img id="image" src="zinho.jfif">
+      <img id="image" src="img/zinho.jfif">
     </div>
   </div>
   <div id="reward">
@@ -89,17 +89,27 @@
       var image = document.getElementById('image');
       var title = document.getElementById('title');
 
-      // Configurar o objeto Howl para reproduzir o áudio
-      var sound = new Howl({
-        src: ['luffy1.mp3'],
-        loop: true,
-        autoplay: false
-      });
+      // Criar um contexto de áudio da API Web Audio
+      var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+
+      // Criar um elemento de áudio para controlar a reprodução
+      var audioElement = new Audio('music/luffy1.mp3');
+
+      // Criar um nó de mídia para conectar o elemento de áudio ao contexto de áudio
+      var audioSource = audioContext.createMediaElementSource(audioElement);
+
+      // Criar um nó de ganho para controlar o volume
+      var gainNode = audioContext.createGain();
+      audioSource.connect(gainNode);
+      gainNode.connect(audioContext.destination);
 
       function handleClick() {
-        gameDiv.style.backgroundImage = "url('oliveira.png')";
-        sound.play();
-        image.src = 'zinho.jfif';
+        gameDiv.style.backgroundImage = "url('img/oliveira.png')";
+
+        // Iniciar a reprodução do áudio
+        audioElement.play();
+
+        image.src = 'img/zinho.jfif';
         title.textContent = 'Gabriel Zinho';
         gameDiv.style.display = 'flex';
       }

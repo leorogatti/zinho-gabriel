@@ -4,8 +4,6 @@
   <meta charset="UTF-8">
   <title>Recompensa</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
-  <script src="js/howler.min.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
@@ -95,6 +93,7 @@
       <h2 id="title" class="animated">Gabriel Zinho</h2>
       <img id="image" src="img/zinho.jfif">
       <audio id="audio" src="music/luffy1.mp3" loop></audio>
+      <button id="play-button" onclick="playAudio()">Play</button>
     </div>
   </div>
   <div id="reward">
@@ -112,6 +111,7 @@
       var image = document.getElementById('image');
       var title = document.getElementById('title');
       var audio = document.getElementById('audio');
+      var playButton = document.getElementById('play-button');
 
       function handleClick() {
         gameDiv.style.backgroundImage = "url('img/oliveira.png')";
@@ -119,6 +119,11 @@
         image.src = 'img/zinho.jfif';
         title.textContent = 'Gabriel Zinho';
         gameDiv.style.display = 'flex';
+        playButton.style.display = 'block';
+      }
+
+      function playAudio() {
+        audio.play();
       }
 
       rewardButton.addEventListener('click', handleClick);

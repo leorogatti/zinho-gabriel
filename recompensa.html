@@ -94,6 +94,7 @@
     <div id="center">
       <h2 id="title" class="animated">Gabriel Zinho</h2>
       <img id="image" src="img/zinho.jfif">
+      <audio id="audio" src="music/luffy1.mp3"></audio>
     </div>
   </div>
   <div id="reward">
@@ -110,29 +111,20 @@
       var gameDiv = document.getElementById('game');
       var image = document.getElementById('image');
       var title = document.getElementById('title');
-      var sound = new Howl({
-    src: ['music/luffy1.mp3'],
-    onload: function() {
-      console.log('Áudio carregado.');
-    }
-  });
+      var audio = document.getElementById('audio');
 
-  function handleClick() {
-    gameDiv.style.backgroundImage = "url('img/oliveira.png')";
-    sound.play();
-    image.src = 'img/zinho.jfif';
-    title.textContent = 'Gabriel Zinho';
-    gameDiv.style.display = 'flex';
-    
-    // Reproduzir áudio
-    Howler.autoUnlock = false;
-    Howler.ctx.resume();
-  }
+      function handleClick() {
+        gameDiv.style.backgroundImage = "url('img/oliveira.png')";
+        audio.play();
+        image.src = 'img/zinho.jfif';
+        title.textContent = 'Gabriel Zinho';
+        gameDiv.style.display = 'flex';
+      }
 
-  rewardButton.addEventListener('click', handleClick);
-  rewardButton.addEventListener('touchstart', handleClick);
-  console.log("Script 'recompensa.js' carregado.");
-});
+      rewardButton.addEventListener('click', handleClick);
+      rewardButton.addEventListener('touchstart', handleClick);
+      console.log("Script 'recompensa.js' carregado.");
+    });
     </script>
   </body>
 </html>

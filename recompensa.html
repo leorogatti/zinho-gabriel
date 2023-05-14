@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>Recompensa</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="js/howler.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.min.js"></script>
+  <script src="https://unpkg.com/tone"></script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
 <style>
@@ -89,25 +91,20 @@
       var image = document.getElementById('image');
       var title = document.getElementById('title');
 
-      // Criar um contexto de áudio da API Web Audio
-      var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-
-      // Criar um elemento de áudio para controlar a reprodução
-      var audioElement = new Audio('music/luffy1.mp3');
-
-      // Criar um nó de mídia para conectar o elemento de áudio ao contexto de áudio
-      var audioSource = audioContext.createMediaElementSource(audioElement);
-
-      // Criar um nó de ganho para controlar o volume
-      var gainNode = audioContext.createGain();
-      audioSource.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+      var sampler = new Tone.Sampler({
+        urls: {
+          'C4': 'music/luffy1.mp3'
+        },
+        release: 1,
+        onload: function() {
+          console.log('Sampler carregado.');
+        }
+      }).toDestination();
 
       function handleClick() {
         gameDiv.style.backgroundImage = "url('img/oliveira.png')";
 
-        // Iniciar a reprodução do áudio
-        audioElement.play();
+        sampler.triggerAttack('C4');
 
         image.src = 'img/zinho.jfif';
         title.textContent = 'Gabriel Zinho';
@@ -116,9 +113,8 @@
 
       rewardButton.addEventListener('click', handleClick);
       rewardButton.addEventListener('touchstart', handleClick);
-
       console.log("Script 'recompensa.js' carregado.");
     });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

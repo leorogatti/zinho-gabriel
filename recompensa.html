@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <title>Recompensa</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.26/Tone.min.js"></script>
-  <script src="https://unpkg.com/tone"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+  <script src="js/howler.min.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
 </head>
 <style>
-  body {
+    body {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -70,6 +70,24 @@
       transform: scale(1.2);
     }
   }
+
+  .reward-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 50px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .reward-button h1 {
+    margin: 0;
+    color: #000;
+    font-size: 16px;
+  }
 </style>
 <body>
   <div id="game">
@@ -81,7 +99,9 @@
   <div id="reward">
     <div id="reward-container">
       <h2 id="reward-title">Parabéns, resgate sua recompensa!</h2>
-      <button id="reward-button">Clique para pegar sua recompensa</button>
+      <div id="reward-button" class="reward-button" onclick="handleClick()">
+        <h1>Clique para pegar sua recompensa</h1>
+      </div>
     </div>
   </div>
   <script>
@@ -90,31 +110,29 @@
       var gameDiv = document.getElementById('game');
       var image = document.getElementById('image');
       var title = document.getElementById('title');
+      var sound = new Howl({
+    src: ['music/luffy1.mp3'],
+    onload: function() {
+      console.log('Áudio carregado.');
+    }
+  });
 
-      var sampler = new Tone.Sampler({
-        urls: {
-          'C4': 'music/luffy1.mp3'
-        },
-        release: 1,
-        onload: function() {
-          console.log('Sampler carregado.');
-        }
-      }).toDestination();
+  function handleClick() {
+    gameDiv.style.backgroundImage = "url('img/oliveira.png')";
+    sound.play();
+    image.src = 'img/zinho.jfif';
+    title.textContent = 'Gabriel Zinho';
+    gameDiv.style.display = 'flex';
+    
+    // Reproduzir áudio
+    Howler.autoUnlock = false;
+    Howler.ctx.resume();
+  }
 
-      function handleClick() {
-        gameDiv.style.backgroundImage = "url('img/oliveira.png')";
-
-        sampler.triggerAttack('C4');
-
-        image.src = 'img/zinho.jfif';
-        title.textContent = 'Gabriel Zinho';
-        gameDiv.style.display = 'flex';
-      }
-
-      rewardButton.addEventListener('click', handleClick);
-      rewardButton.addEventListener('touchstart', handleClick);
-      console.log("Script 'recompensa.js' carregado.");
-    });
+  rewardButton.addEventListener('click', handleClick);
+  rewardButton.addEventListener('touchstart', handleClick);
+  console.log("Script 'recompensa.js' carregado.");
+});
     </script>
   </body>
 </html>

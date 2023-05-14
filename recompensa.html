@@ -112,22 +112,34 @@
       var title = document.getElementById('title');
       var audio = document.getElementById('audio');
       var playButton = document.getElementById('play-button');
+      var interactionOccurred = false;
 
       function handleClick() {
         gameDiv.style.backgroundImage = "url('img/oliveira.png')";
-        audio.play();
         image.src = 'img/zinho.jfif';
         title.textContent = 'Gabriel Zinho';
         gameDiv.style.display = 'flex';
         playButton.style.display = 'block';
+        audio.load(); // Carrega o áudio sem reproduzi-lo
+        interactionOccurred = true;
       }
 
       function playAudio() {
-        audio.play();
+        if (interactionOccurred) {
+          audio.play();
+        }
       }
 
       rewardButton.addEventListener('click', handleClick);
       rewardButton.addEventListener('touchstart', handleClick);
+      document.addEventListener('click', function() {
+        if (!interactionOccurred) {
+          audio.play();
+          audio.pause();
+          interactionOccurred = true;
+        }
+      });
+
       console.log("Script 'recompensa.js' carregado.");
     });
   </script>
